@@ -1,30 +1,31 @@
-import { Request, Response } from "express";
-import catchAsync from "../../../shared/catchAsync"
+import { Book } from "@prisma/client";
 import sendResponse from "../../../shared/sendResponse";
+import catchAsync from "../../../shared/catchAsync";
+import { Request , Response} from "express";
 import httpStatus from "http-status";
-import { CategoryService } from "./category.service";
-import { Category } from "@prisma/client";
+import { BookService } from "./book.service";
+
 
 
 
 const create = catchAsync(
     async (req: Request, res: Response) => {
         const data = req.body;
-        const result = await CategoryService.create(data);
+        const result = await BookService.create(data);
 
-        sendResponse<Category>(res, {
+        sendResponse<Book>(res, {
             statusCode: httpStatus.OK,
             success: true,
-            message: "Category created successfully",
+            message: "Book created successfully",
             data: result
         })
     }
 );
 const getAll = catchAsync(
     async (req: Request, res: Response) => {
-        const result = await CategoryService.getAll();
+        const result = await BookService.getAll();
 
-        sendResponse<Category[]>(res, {
+        sendResponse<Book[]>(res, {
             success: true,
             statusCode: httpStatus.OK,
             message: "Categories fetched successfully",
@@ -36,9 +37,9 @@ const getSingle = catchAsync(
         const id = req.params.id;
 
         console.log(id);
-        const result = await CategoryService.getSingle(id);
+        const result = await BookService.getSingle(id);
 
-        sendResponse<Category>(res, {
+        sendResponse<Book>(res, {
             success: true,
             statusCode: httpStatus.OK,
             message: "Categories fetched successfully",
@@ -52,12 +53,12 @@ const update = catchAsync(
         const id = req.params.id;
         const data = req.body;
         console.log(data);
-        const result = await CategoryService.update(id, data);
+        const result = await BookService.update(id, data);
 
-        sendResponse<Category>(res, {
+        sendResponse<Book>(res, {
             success: true,
             statusCode: httpStatus.OK,
-            message: "Category updated successfully",
+            message: "Book updated successfully",
 
             data: result
         })
@@ -68,12 +69,12 @@ const DeleteCatagory = catchAsync(
     async (req: Request, res: Response) => {
         const id = req.params.id;
 
-        const result = await CategoryService.DeleteCatagory(id);
+        const result = await BookService.DeleteBook(id);
 
-        sendResponse<Category>(res, {
+        sendResponse<Book>(res, {
             success: true,
             statusCode: httpStatus.OK,
-            message: "Category deleted successfully",
+            message: "Book deleted successfully",
             data: result
         })
     }
@@ -81,7 +82,7 @@ const DeleteCatagory = catchAsync(
 
 
 
-export const CategoryController = {
+export const BookController = {
     create, getAll, getSingle, update,
     DeleteCatagory
 }

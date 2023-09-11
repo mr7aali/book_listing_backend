@@ -13,6 +13,10 @@ router.post("/create-category",
 
 
 router.get("/", CategoryController.getAll);
+router.get("/:id", CategoryController.getSingle);
+
+router.post("/:id", CategoryController.update);
+router.delete("/:id", CategoryController.DeleteCatagory);
 
 
 export const CategoryRoutes = router;
