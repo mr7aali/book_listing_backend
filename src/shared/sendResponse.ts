@@ -10,6 +10,8 @@ type IApiReponse<T> = {
     }
     data?: T | null;
 }
+
+
 const sendResponse = <T>(res: Response, data: IApiReponse<T>): void => {
     const responseData: IApiReponse<T> = {
         success: data.success,

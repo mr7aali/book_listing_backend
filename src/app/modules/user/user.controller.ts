@@ -29,9 +29,8 @@ const getAllUser = catchAsync(
         sendResponse<User[]>(res, {
             success: true,
             statusCode: httpStatus.OK,
-            message: null,
+            message: "Users retrieved successfully",
             data: result
-
         });
     })
 const getSingleUser = catchAsync(
@@ -49,7 +48,25 @@ const getSingleUser = catchAsync(
     }
 )
 
+const updateSingleUser = catchAsync(
+    async (req: Request, res: Response) => {
+        
+        const id = req.body.id;
+        delete req.body.id;
+
+        const result = await UserService.updateSingleUser(id, req.body);
+        sendResponse(res, {
+            statusCode: httpStatus.OK,
+            success: true,
+            message: "Update User successfully",
+            data: result
+        })
+    }
+)
+
 
 export const UserController = {
-    createUser, getAllUser, getSingleUser
+    createUser, getAllUser,
+    getSingleUser,
+    updateSingleUser
 }

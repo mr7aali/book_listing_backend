@@ -1,6 +1,7 @@
 import express, { Application, urlencoded } from "express";
 import cors from "cors";
 import router from "./app/routes";
+import globalErrorHandler from "./app/middlewares/globalErrorHandler";
 
 
 
@@ -12,8 +13,11 @@ app.use(express.urlencoded({ extended: true }));
 
 
 
+
+
 //route
 
 app.use("/api/v1", router);
+app.use(globalErrorHandler);
 
 export default app;
