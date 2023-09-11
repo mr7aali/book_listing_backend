@@ -50,11 +50,13 @@ const getSingleUser = catchAsync(
 
 const updateSingleUser = catchAsync(
     async (req: Request, res: Response) => {
-        
-        const id = req.body.id;
-        delete req.body.id;
 
-        const result = await UserService.updateSingleUser(id, req.body);
+        const id = req.params.id;
+        const data = req.body
+     
+
+        const result = await UserService.updateSingleUser(id, data);
+       
         sendResponse(res, {
             statusCode: httpStatus.OK,
             success: true,
@@ -63,10 +65,25 @@ const updateSingleUser = catchAsync(
         })
     }
 )
+const deleteSingleUser = catchAsync(
+    async (req: Request, res: Response) => {
+
+        const id = req.params.id;
+
+
+        const result = await UserService.deleteSingleUser(id);
+        sendResponse(res, {
+            statusCode: httpStatus.OK,
+            success: true,
+            message: "Uers deleted successfully",
+            data: result
+        })
+    }
+)
 
 
 export const UserController = {
     createUser, getAllUser,
-    getSingleUser,
+    getSingleUser, deleteSingleUser,
     updateSingleUser
 }
