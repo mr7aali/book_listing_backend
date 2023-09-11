@@ -11,6 +11,7 @@ import { BookService } from "./book.service";
 const create = catchAsync(
     async (req: Request, res: Response) => {
         const data = req.body;
+       
         const result = await BookService.create(data);
 
         sendResponse<Book>(res, {
@@ -65,7 +66,7 @@ const update = catchAsync(
     }
 )
 
-const DeleteCatagory = catchAsync(
+const DeleteBook = catchAsync(
     async (req: Request, res: Response) => {
         const id = req.params.id;
 
@@ -84,5 +85,5 @@ const DeleteCatagory = catchAsync(
 
 export const BookController = {
     create, getAll, getSingle, update,
-    DeleteCatagory
+    DeleteBook
 }

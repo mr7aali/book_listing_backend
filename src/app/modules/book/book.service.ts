@@ -5,9 +5,9 @@ import { prisma } from "../../../shared/prisma";
 import ApiError from "../../../errors/ApiError";
 
 
-const create = (data: Book): Promise<Book> => {
-    const result = prisma.book.create({ data });
+const create = async (data: Book): Promise<Book> => {
 
+    const result = await prisma.book.create({ data });
     return result;
 }
 
@@ -16,7 +16,7 @@ const getAll = async (): Promise<Book[]> => {
     const result = await prisma.book.findMany({});
 
     if (!result) {
-        throw new ApiError(httpStatus.BAD_REQUEST, "Catagory not exists");
+        throw new ApiError(httpStatus.BAD_REQUEST, "Book not exists");
     }
     return result;
 }
@@ -29,7 +29,7 @@ const getSingle = async (id: string): Promise<Book> => {
     });
 
     if (!result) {
-        throw new ApiError(httpStatus.BAD_REQUEST, "Catagory not exists");
+        throw new ApiError(httpStatus.BAD_REQUEST, "Book not exists");
     }
     return result;
 }
@@ -51,7 +51,6 @@ const DeleteBook = async (id: string): Promise<Book> => {
     })
     return result;
 }
-
 
 
 export const BookService = {
