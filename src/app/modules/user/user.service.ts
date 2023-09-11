@@ -1,7 +1,10 @@
 import httpStatus from 'http-status';
-import { PrismaClient, User } from "@prisma/client"
+import { User } from "@prisma/client"
 import ApiError from "../../../errors/ApiError";
-const prisma = new PrismaClient();
+import { prisma } from '../../../shared/prisma';
+
+
+
 
 
 
@@ -29,6 +32,8 @@ const getAllUser = async () => {
     }
     return result;
 }
+
+
 const getSingleUser = async (id: string): Promise<User | null> => {
     const result = await prisma.user.findUnique({
         where: {
@@ -63,6 +68,6 @@ const deleteSingleUser = async (id: string) => {
 
 
 export const UserService = {
-    createUser, getAllUser,deleteSingleUser,
+    createUser, getAllUser, deleteSingleUser,
     getSingleUser, updateSingleUser
 }
