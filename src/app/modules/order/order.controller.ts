@@ -11,6 +11,7 @@ import httpStatus from "http-status";
 const createOrder = catchAsync(
     async (req: Request, res: Response) => {
         const data = req.body;
+        console.log(data);
         const result = await OrderService.create(data);
 
 
@@ -30,7 +31,7 @@ const getAllOrder = catchAsync(
         sendResponse<Order[]>(res, {
             success: true,
             statusCode: httpStatus.OK,
-            message: "Orders retrieved successfully",
+            message: "Orders retriever successfully",
             data: result
         });
     })

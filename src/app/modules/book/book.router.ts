@@ -6,6 +6,7 @@ import validateRequest from "../../middlewares/validateRequest";
 const router = express.Router();
 
 router.post("/create-book",
+
     validateRequest(BookValidation.createZodSchema),
     BookController.create);
 

@@ -8,8 +8,8 @@ import { prisma } from '../../../shared/prisma';
 
 
 
-const create = async (data: Order |any) => {
-  
+const create = async (data: Order|any) => {
+ 
     const result = await prisma.order.create({
         data: data
     })
@@ -34,7 +34,7 @@ const getAll = async () => {
 }
 
 
-const getSingle = async (id: string): Promise<Order | null> => {
+const getSingle = async (id: string): Promise<Order> => {
     const result = await prisma.order.findUnique({
         where: {
             id: id
@@ -46,7 +46,7 @@ const getSingle = async (id: string): Promise<Order | null> => {
     }
     return result;
 }
-const updateSingle = async (id: string, data: any) => {
+const updateSingle = async (id: string, data: Order | any) => {
 
     const result = await prisma.order.update({
         where: {
