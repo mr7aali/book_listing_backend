@@ -9,18 +9,14 @@ import { prisma } from '../../../shared/prisma';
 
 
 const create = async (data: Order|any) => {
- 
+    
     const result = await prisma.order.create({
         data: data
     })
     if (!result) {
         throw new ApiError(httpStatus.BAD_REQUEST, "Failed to create order");
     }
-
-
     return result;
-
-
 };
 
 
