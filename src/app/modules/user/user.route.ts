@@ -14,6 +14,7 @@ router.post("/auth/signup",
 
 router.get("/users/:id",
     auth(ENUM_USER_ROLE.ADMIN),
+    
     UserController.getSingleUser);
 
 router.get("/users",

@@ -35,7 +35,7 @@ const getSingle = catchAsync(
     async (req: Request, res: Response) => {
         const id = req.params.id;
 
-        console.log(id);
+      
         const result = await CategoryService.getSingle(id);
 
         sendResponse<Category>(res, {
@@ -51,7 +51,7 @@ const update = catchAsync(
     async (req: Request, res: Response) => {
         const id = req.params.id;
         const data = req.body;
-        console.log(data);
+      
         const result = await CategoryService.update(id, data);
 
         sendResponse<Category>(res, {

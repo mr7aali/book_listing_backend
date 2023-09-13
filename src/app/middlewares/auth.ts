@@ -4,6 +4,9 @@ import { Secret } from 'jsonwebtoken';
 import ApiError from '../../errors/ApiError';
 import { verifyToken } from '../../helpers/jwtHelpers';
 
+
+
+
 const auth =
   (...requiredRoles: string[]) =>
 
@@ -11,7 +14,7 @@ const auth =
       try {
         //get authorization token
         const token = req.headers.authorization;
-        console.log(token);
+        
         if (!token) {
           throw new ApiError(httpStatus.UNAUTHORIZED, 'You are not authorized');
         }
@@ -20,12 +23,12 @@ const auth =
 
         verifiedUser = verifyToken(token, "access_Token_secret" as Secret);
 
-        console.log(verifiedUser);
+     
 
         ////!ERROR /////
-        // req.user = verifiedUser; // role  , userId
-
-        // role diye guard korar jnno
+        req.user = verifiedUser; // role  , userId
+     
+        
         if (requiredRoles.length && !requiredRoles.includes(verifiedUser.role)) {
           throw new ApiError(httpStatus.FORBIDDEN, 'Forbidden');
         }

@@ -37,7 +37,7 @@ const getSingle = catchAsync(
     async (req: Request, res: Response) => {
         const id = req.params.id;
 
-        console.log(id);
+       
         const result = await BookService.getSingle(id);
 
         sendResponse<Book>(res, {
@@ -53,7 +53,7 @@ const update = catchAsync(
     async (req: Request, res: Response) => {
         const id = req.params.id;
         const data = req.body;
-        console.log(data);
+      
         const result = await BookService.update(id, data);
 
         sendResponse<Book>(res, {
