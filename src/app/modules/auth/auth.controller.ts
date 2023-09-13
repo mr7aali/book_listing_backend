@@ -41,10 +41,10 @@ const refreshToken = catchAsync(
             secure: true,  // production ? true : false
             httpOnly: true
         };
-    
+
         res.cookie("refreshToken", refreshToken, cookieOption);
 
-       
+
 
         sendResponse<IRefreshTokenResponse>(res, {
             statusCode: httpStatus.OK,
@@ -56,5 +56,5 @@ const refreshToken = catchAsync(
 )
 
 export const AuthController = {
-    login,refreshToken
+    login, refreshToken
 }
