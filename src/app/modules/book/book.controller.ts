@@ -1,9 +1,11 @@
 import { Book } from "@prisma/client";
 import sendResponse from "../../../shared/sendResponse";
 import catchAsync from "../../../shared/catchAsync";
-import { Request , Response} from "express";
+import { Request, Response } from "express";
 import httpStatus from "http-status";
 import { BookService } from "./book.service";
+import pick from "../../../shared/pick";
+import { paginationFields } from "../../../constants/pagination";
 
 
 
@@ -11,7 +13,7 @@ import { BookService } from "./book.service";
 const create = catchAsync(
     async (req: Request, res: Response) => {
         const data = req.body;
-       
+
         const result = await BookService.create(data);
 
         sendResponse<Book>(res, {
@@ -24,27 +26,34 @@ const create = catchAsync(
 );
 const getAll = catchAsync(
     async (req: Request, res: Response) => {
-        const result = await BookService.getAll();
+
+        const filters = pick(req.query,['searchTerm',])
+        const paginationOption = pick(req.query, paginationFields)
+
+        
+        console.log(paginationOption);
+        const result = await BookService.getAll(paginationOption);
 
         sendResponse<Book[]>(res, {
             success: true,
             statusCode: httpStatus.OK,
             message: "Categories fetched successfully",
-            data: result
+            meta: result.meta,
+            data: result.data
         });
     })
 const getSingle = catchAsync(
     async (req: Request, res: Response) => {
         const id = req.params.id;
 
-       
+
         const result = await BookService.getSingle(id);
 
         sendResponse<Book>(res, {
             success: true,
             statusCode: httpStatus.OK,
             message: "Categories fetched successfully",
-            data: result
+            data: result,
         });
     })
 
@@ -53,7 +62,7 @@ const update = catchAsync(
     async (req: Request, res: Response) => {
         const id = req.params.id;
         const data = req.body;
-      
+
         const result = await BookService.update(id, data);
 
         sendResponse<Book>(res, {

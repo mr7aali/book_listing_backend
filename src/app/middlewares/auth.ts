@@ -27,7 +27,7 @@ const auth =
 
         ////!ERROR /////
         req.user = verifiedUser; // role  , userId
-     
+        console.log(req.user.role);
         
         if (requiredRoles.length && !requiredRoles.includes(verifiedUser.role)) {
           throw new ApiError(httpStatus.FORBIDDEN, 'Forbidden');

@@ -2,7 +2,7 @@ import { Category } from "@prisma/client"
 import { prisma } from "../../../shared/prisma"
 import ApiError from "../../../errors/ApiError";
 import httpStatus from "http-status";
-import { Sign } from "crypto";
+
 
 const create = (data: Category): Promise<Category> => {
     const result = prisma.category.create({ data });
@@ -24,6 +24,9 @@ const getSingle = async (id: string): Promise<Category> => {
     const result = await prisma.category.findUnique({
         where: {
             id
+        },
+        include: {
+            Book: true
         }
     });
 

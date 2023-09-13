@@ -28,6 +28,7 @@ model User {
 model Category {
   id    String @id @default(uuid())
   title String
+  Book Book[]
 }
 
 model Book {
@@ -38,6 +39,7 @@ model Book {
   genre           String
   publicationDate DateTime
   categoryId      String
+  category        Category          @relation(fields: [categoryId], references: [id])
   ReviewAndRating ReviewAndRating[]
 }
 
@@ -54,9 +56,8 @@ model ReviewAndRating {
 model Order {
   id           String   @id @default(uuid())
   userId       String
-  orderedBooks  Json
+  orderedBooks Json
   status       String   @default("pending")
   createdAt    DateTime @default(now())
   User         User     @relation(fields: [userId], references: [id])
 }
-
