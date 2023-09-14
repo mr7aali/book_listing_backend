@@ -16,8 +16,6 @@ export const verifyToken = (token: string, secret: Secret) => {
         const verifiedToken = jwt.verify(token, secret) as JwtPayload;
         return verifiedToken;
     } catch (err) {
-        throw new ApiError(httpStatus.FORBIDDEN, "Invalid Refresh Token")
+        throw new ApiError(httpStatus.FORBIDDEN, "Invalid Token")
     }
-
-
 }

@@ -13,8 +13,9 @@ router.post("/create-order",
 router.get('/',
     auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.CUSTOMER),
     OrderController.getAllOrder);
+    
 router.get('/:id',
-    auth(ENUM_USER_ROLE.CUSTOMER),
+    auth(ENUM_USER_ROLE.CUSTOMER,ENUM_USER_ROLE.ADMIN),
     OrderController.getSingleOrder);
 
 router.post('/:id',

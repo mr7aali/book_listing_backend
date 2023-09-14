@@ -1,11 +1,13 @@
+import { type } from 'os';
 import { IGenericErrorMessage } from './error';
 
 export type IGenericResponse<T> = {
   meta: {
     page: number;
-    limit: number;
+    size: number;
     total: number;
-    totalPage:number
+    totalPage: number;
+    _count?: number
   };
   data: T;
 };
@@ -15,4 +17,8 @@ export type IGenericErrorResponse = {
   message: string;
   errorMessages: IGenericErrorMessage[];
 };
+
+
+export type IValidationUser =
+  { role: string, userId: string }
 

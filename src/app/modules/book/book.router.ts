@@ -20,6 +20,11 @@ router.get('/:id',
     BookController.getSingle);
 
 router.post('/:id',
+    BookController.getBookByCategory);
+
+
+
+router.patch('/:id',
     auth(ENUM_USER_ROLE.ADMIN),
     BookController.update);
 

@@ -4,6 +4,8 @@ import sendResponse from "../../../shared/sendResponse";
 import { OrderService } from "./order.service";
 import { Order } from "@prisma/client";
 import httpStatus from "http-status";
+import { JwtPayload } from "jsonwebtoken";
+import { IValidationUser } from "../../../interfaces/common";
 
 
 
@@ -11,7 +13,7 @@ import httpStatus from "http-status";
 const createOrder = catchAsync(
     async (req: Request, res: Response) => {
         const data = req.body;
-      
+
         const result = await OrderService.create(data);
 
 
@@ -27,8 +29,7 @@ const createOrder = catchAsync(
 const getAllOrder = catchAsync(
     async (req: Request, res: Response) => {
 
-        
-        const result = await OrderService.getAll();
+        const result = await OrderService.getAll(req.user as IValidationUser);
         sendResponse<Order[]>(res, {
             success: true,
             statusCode: httpStatus.OK,
@@ -41,8 +42,8 @@ const getSingleOrder = catchAsync(
 
         const id = req.params.id;
 
-        const result = await OrderService.getSingle(id);
-        sendResponse<Order>(res, {
+        const result = await OrderService.getSingle(req.user as IValidationUser, id);
+        sendResponse<Order[]>(res, {
             statusCode: httpStatus.OK,
             success: true,
             message: "Order getched successfully",
