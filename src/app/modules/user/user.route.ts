@@ -21,7 +21,7 @@ router.get("/users",
     auth(ENUM_USER_ROLE.ADMIN),
     UserController.getAllUser);
 
-router.post("/users/:id",
+router.patch("/users/:id",
     validateRequest(UserValidation.UpdateUserZodSchema),
     auth(ENUM_USER_ROLE.ADMIN),
     UserController.updateSingleUser);

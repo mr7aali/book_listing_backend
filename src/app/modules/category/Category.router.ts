@@ -19,7 +19,7 @@ router.get("/", CategoryController.getAll);
 
 router.get("/:id", CategoryController.getSingle);
 
-router.post("/:id",
+router.patch("/:id",
     auth(ENUM_USER_ROLE.ADMIN),
     CategoryController.update);
 
