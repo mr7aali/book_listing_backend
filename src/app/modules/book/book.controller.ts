@@ -28,10 +28,10 @@ const create = catchAsync(
 const getAll = catchAsync(
     async (req: Request, res: Response) => {
 
-        const filters  = pick(req.query, ['searchTerm', 'title', 'author', 'genre'])
+        const filters  = pick(req.query, ['searchTerm', 'title', 'author', 'genre','maxPrice','minPrice'])
         const paginationOption = pick(req.query, ["page", "limit", "sortBy", "sortOrder"]);//paginationFields
 
-
+     console.log(filters);
         
         const result = await BookService.getAll(filters , paginationOption);
 

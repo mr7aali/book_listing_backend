@@ -32,11 +32,25 @@ const getAll = async (filters: Partial<IBookFilterRequest>, paginationOption: IP
     const skip = (page - 1) * limit;
     const sortBy = paginationOption.sortBy || 'publicationDate';
     const sortOrder = paginationOption.sortOrder || 'asc';
-    const searchTerm = filters.searchTerm
+    const searchTerm = filters.searchTerm;
+    const minPrice = Number(filters.minPrice);
+    const maxPrice = Number(filters.maxPrice);
 
+
+    delete filters.searchTerm;
+    delete filters.maxPrice;
+    delete filters.minPrice
+    // const minPrice = filters.minPrice;
+    // const maxPrice = filters.maxPrice;
+
+    // console.log(maxPrice,minPrice);
+
+    console.log(filters);
 
     const sortCondition: { [key: string]: string } = {};
     const andConditions = [];
+
+
 
     if (sortBy && sortOrder) {
         sortCondition[sortBy] = sortOrder
@@ -52,12 +66,22 @@ const getAll = async (filters: Partial<IBookFilterRequest>, paginationOption: IP
             }))
         })
     };
+    if (minPrice) {
+        andConditions.push({
+            price: {
+                gt: minPrice
+            }
+        })
+    };
+    if (maxPrice) {
+        andConditions.push({
+            price: {
+                lt: maxPrice
+            }
+        })
+    }
 
-    delete filters.searchTerm;
-    console.log(Object.keys(filters));
     if (Object.keys(filters).length > 0) {
-
-
         andConditions.push({
             AND: Object.keys(filters).map((key) => ({
                 [key]: {
@@ -72,13 +96,11 @@ const getAll = async (filters: Partial<IBookFilterRequest>, paginationOption: IP
 
     const whereCondition: Prisma.BookWhereInput = andConditions.length > 0 ?
         {
-            AND: andConditions,
-            price:{
-                gt:0
-            }
+            AND: andConditions
         }
 
         : {};
+
     const result = await prisma.book.findMany({
         where: whereCondition,
         // where: {
@@ -86,18 +108,13 @@ const getAll = async (filters: Partial<IBookFilterRequest>, paginationOption: IP
         //         gt: 500
         //     }
         // },
+
         take: limit,
         skip,
         orderBy: sortCondition
     });
 
-    // const result = await prisma.book.aggregate({
-    //     where: {
 
-    //     },
-    //     skip,
-    //     take: limit, orderBy: sortCondition
-    // })
 
     if (!result) {
         throw new ApiError(httpStatus.BAD_REQUEST, "Book not exists");

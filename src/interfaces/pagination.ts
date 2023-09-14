@@ -6,8 +6,10 @@ export type IPaginationOptions = {
     limit?: number;
     sortBy?: string;
     sortOrder?: 'asc' | 'desc';
+   
 };
 
-export type IBookFilterRequest = Book & { searchTerm: string }
+export type IBookFilterRequest = Book & { searchTerm?: string; minPrice?: number;
+    maxPrice?: number; }
 
 
