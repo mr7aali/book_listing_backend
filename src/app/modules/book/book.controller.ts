@@ -6,6 +6,7 @@ import httpStatus from "http-status";
 import { BookService } from "./book.service";
 import pick from "../../../shared/pick";
 import { paginationFields } from "../../../constants/pagination";
+import { IBookFilterRequest } from "../../../interfaces/pagination";
 
 
 
@@ -27,12 +28,12 @@ const create = catchAsync(
 const getAll = catchAsync(
     async (req: Request, res: Response) => {
 
-        const filters = pick(req.query,['searchTerm',])
-        const paginationOption = pick(req.query, paginationFields)
+        const filters  = pick(req.query, ['searchTerm', 'title', 'author', 'genre'])
+        const paginationOption = pick(req.query, ["page", "limit", "sortBy", "sortOrder"]);//paginationFields
+
 
         
-        console.log(paginationOption);
-        const result = await BookService.getAll(paginationOption);
+        const result = await BookService.getAll(filters , paginationOption);
 
         sendResponse<Book[]>(res, {
             success: true,

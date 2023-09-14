@@ -1,9 +1,11 @@
+import { prisma } from './../../../shared/prisma';
 import { IGenericResponse } from './../../../interfaces/common';
-import { Book } from "@prisma/client";
+import { Book, Prisma } from "@prisma/client";
 import httpStatus from "http-status";
-import { prisma } from "../../../shared/prisma";
+
 import ApiError from "../../../errors/ApiError";
-import { IPaginationOptions } from "../../../interfaces/pagination";
+import { IBookFilterRequest, IPaginationOptions } from "../../../interfaces/pagination";
+import { BookSearchAbleFields } from './book.interface';
 
 
 
@@ -23,32 +25,75 @@ const create = async (data: Book): Promise<Book> => {
 }
 
 
-const getAll = async (paginationOption: IPaginationOptions): Promise<IGenericResponse<Book[]>> => {
+const getAll = async (filters: Partial<IBookFilterRequest>, paginationOption: IPaginationOptions): Promise<IGenericResponse<Book[]>> => {
 
     const page = Number(paginationOption.page) || 1;
     const limit = Number(paginationOption.limit) || 10;
     const skip = (page - 1) * limit;
     const sortBy = paginationOption.sortBy || 'publicationDate';
     const sortOrder = paginationOption.sortOrder || 'asc';
+    const searchTerm = filters.searchTerm
 
 
     const sortCondition: { [key: string]: string } = {};
+    const andConditions = [];
 
     if (sortBy && sortOrder) {
         sortCondition[sortBy] = sortOrder
     }
 
+    if (searchTerm) {
+        andConditions.push({
+            OR: BookSearchAbleFields.map((field) => ({
+                [field]: {
+                    contains: searchTerm,
+                    mode: "insensitive"
+                }
+            }))
+        })
+    };
 
+    delete filters.searchTerm;
+    console.log(Object.keys(filters));
+    if (Object.keys(filters).length > 0) {
+
+
+        andConditions.push({
+            AND: Object.keys(filters).map((key) => ({
+                [key]: {
+                    equals: (filters as any)[key]
+                }
+            }))
+        })
+    };
+
+
+
+
+    const whereCondition: Prisma.BookWhereInput = andConditions.length > 0 ?
+        {
+            AND: andConditions,
+            price:{
+                gt:0
+            }
+        }
+
+        : {};
     const result = await prisma.book.findMany({
+        where: whereCondition,
+        // where: {
+        //     price: {
+        //         gt: 500
+        //     }
+        // },
         take: limit,
         skip,
         orderBy: sortCondition
-        
     });
 
     // const result = await prisma.book.aggregate({
     //     where: {
-           
+
     //     },
     //     skip,
     //     take: limit, orderBy: sortCondition
