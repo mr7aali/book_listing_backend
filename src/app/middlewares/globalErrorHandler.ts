@@ -57,7 +57,7 @@ const globalErrorHandler: ErrorRequestHandler = (
         success: false,
         message,
         errorMessages,
-        stack: error?.stack
+        // stack: error?.stack
     });
 };
 
