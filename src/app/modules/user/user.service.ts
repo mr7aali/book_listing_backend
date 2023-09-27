@@ -63,6 +63,8 @@ const deleteSingleUser = async (id: string) => {
             id: id
         }
     })
+    
+   
     return result
 }
 

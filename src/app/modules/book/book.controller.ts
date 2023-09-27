@@ -38,7 +38,7 @@ const getAll = catchAsync(
         sendResponse<Book[]>(res, {
             success: true,
             statusCode: httpStatus.OK,
-            message: "Categories fetched successfully",
+            message: "Books fetched successfully",
             meta: result.meta,
             data: result.data
         });
@@ -50,6 +50,7 @@ const getAll = catchAsync(
 const getBookByCategory = catchAsync(
     async (req: Request, res: Response) => {
         const id = req.params.id;
+        console.log(id);
         
         const result = await BookService.getBookByCategory(id);
         sendResponse<any>(res, {
@@ -71,7 +72,7 @@ const getSingle = catchAsync(
         sendResponse<Book>(res, {
             success: true,
             statusCode: httpStatus.OK,
-            message: "Categories fetched successfully",
+            message:  "Book fetched successfully",
             data: result,
         });
     });

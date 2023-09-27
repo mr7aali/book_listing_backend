@@ -18,8 +18,12 @@ const sendResponse_1 = __importDefault(require("../../../shared/sendResponse"));
 const order_service_1 = require("./order.service");
 const http_status_1 = __importDefault(require("http-status"));
 const createOrder = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     const data = req.body;
-    const result = yield order_service_1.OrderService.create(data);
+    const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.userId;
+    const orderData = Object.assign(Object.assign({}, data), { userId });
+    const result = yield order_service_1.OrderService.create(orderData);
+    // console.log(object);
     (0, sendResponse_1.default)(res, {
         success: true,
         statusCode: 200,

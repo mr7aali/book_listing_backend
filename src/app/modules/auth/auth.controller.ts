@@ -24,7 +24,8 @@ const login = catchAsync(
             statusCode: httpStatus.OK,
             success: true,
             message: "User login successfully!",
-            data: result
+            token: result.accessToken
+            // data: result
         })
     }
 );

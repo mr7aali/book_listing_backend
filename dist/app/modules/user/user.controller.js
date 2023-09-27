@@ -46,6 +46,17 @@ const getSingleUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
         data: result
     });
 }));
+const getprofile = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.userId;
+    const result = yield user_service_1.UserService.getSingleUser(userId);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: "User retrieved successfully",
+        data: result
+    });
+}));
 const updateSingleUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
     const data = req.body;
@@ -70,5 +81,5 @@ const deleteSingleUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 
 exports.UserController = {
     createUser, getAllUser,
     getSingleUser, deleteSingleUser,
-    updateSingleUser
+    updateSingleUser, getprofile
 };

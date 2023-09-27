@@ -42,7 +42,7 @@ const login = async (data: Partial<User>): Promise<ILoginResponse> => {
         userId: result.id,
     }
 
-    const accessToken = createToken(Tokendata, "access_Token_secret", { expiresIn: '1d' });
+    const accessToken = createToken(Tokendata, "access_Token_secret", { expiresIn: '200d' });
     const refreshToken = createToken(Tokendata, "refreshToken_secret", { expiresIn: "365d" });
 
 

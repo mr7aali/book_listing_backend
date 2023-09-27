@@ -19,7 +19,7 @@ router.get('/', BookController.getAll);
 router.get('/:id',
     BookController.getSingle);
 
-router.post('/:id',
+router.get('/:id/category',
     BookController.getBookByCategory);
 
 

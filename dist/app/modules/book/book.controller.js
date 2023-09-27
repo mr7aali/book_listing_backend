@@ -36,13 +36,14 @@ const getAll = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0,
     (0, sendResponse_1.default)(res, {
         success: true,
         statusCode: http_status_1.default.OK,
-        message: "Categories fetched successfully",
+        message: "Books fetched successfully",
         meta: result.meta,
         data: result.data
     });
 }));
 const getBookByCategory = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
+    console.log(id);
     const result = yield book_service_1.BookService.getBookByCategory(id);
     (0, sendResponse_1.default)(res, {
         success: true,
@@ -57,7 +58,7 @@ const getSingle = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void
     (0, sendResponse_1.default)(res, {
         success: true,
         statusCode: http_status_1.default.OK,
-        message: "Categories fetched successfully",
+        message: "Book fetched successfully",
         data: result,
     });
 }));

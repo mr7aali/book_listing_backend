@@ -13,15 +13,17 @@ import { IValidationUser } from "../../../interfaces/common";
 const createOrder = catchAsync(
     async (req: Request, res: Response) => {
         const data = req.body;
-
-        const result = await OrderService.create(data);
-
+        const userId = req.user?.userId;
+        const orderData = { ...data, userId };
+        const result = await OrderService.create( orderData);
+        // console.log(object);
 
         sendResponse<Order>(res, {
             success: true,
             statusCode: 200,
             message: "Order created successfully!",
             data: result
+
         })
     });
 

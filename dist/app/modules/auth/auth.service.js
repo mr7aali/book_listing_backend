@@ -48,7 +48,7 @@ const login = (data) => __awaiter(void 0, void 0, void 0, function* () {
         role: result.role,
         userId: result.id,
     };
-    const accessToken = (0, jwtHelpers_1.createToken)(Tokendata, "access_Token_secret", { expiresIn: '1d' });
+    const accessToken = (0, jwtHelpers_1.createToken)(Tokendata, "access_Token_secret", { expiresIn: '200d' });
     const refreshToken = (0, jwtHelpers_1.createToken)(Tokendata, "refreshToken_secret", { expiresIn: "365d" });
     return {
         accessToken,
